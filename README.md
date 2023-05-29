@@ -1,4 +1,4 @@
-# Electron + Vue3 + TypeScript + Vite
+# Electron + Vue3 + TypeScript + Vite + ElementPlus
 
 ### 一些单词
 
@@ -55,6 +55,7 @@ BrowserWindow
 - 入口: 以一个 HTML 文件作为渲染器进程的入口点
 
 3
+通信
 主进程和渲染进程之间的通信
 - ipcMain 主进程中的模块
 - ipcRender 渲染进程中的模块

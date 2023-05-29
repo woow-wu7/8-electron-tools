@@ -3,10 +3,19 @@ import electron from "vite-plugin-electron";
 import renderer from "vite-plugin-electron-renderer";
 import vue from "@vitejs/plugin-vue";
 
+const path = require("path");
+
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
     port: 7777,
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "./src/styles/index.scss";',
+      },
+    },
   },
   plugins: [
     vue(),

@@ -90,8 +90,11 @@ app.on("window-all-closed", () => {
 
 // 3
 // 进程通信
-// Home.vue to main.js
+// Home.vue <--> main.js
+// 接收数据
 ipcMain.on("message_from_ipcRenderer", (e, data) => {
   console.log("e", e);
   console.log("data", data);
+  // 发数据
+  e.reply("message_from_ipcMain", "主进程to渲染进程");
 });
