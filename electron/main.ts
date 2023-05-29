@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 
 // The built directory structure
@@ -87,3 +87,11 @@ app.on("window-all-closed", () => {
 });
 
 // app.whenReady().then(createWindow);
+
+// 3
+// 进程通信
+// Home.vue to main.js
+ipcMain.on("message_from_ipcRenderer", (e, data) => {
+  console.log("e", e);
+  console.log("data", data);
+});
