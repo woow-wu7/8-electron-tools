@@ -6,6 +6,8 @@
 Electron 电子
 
 process 进程
+coordinate 坐标
+tray 托盘
 ```
 
 ### (一) app 模块

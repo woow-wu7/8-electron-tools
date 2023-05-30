@@ -5,8 +5,13 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "record",
       component: () => import("../views/Home.vue"),
+    },
+    {
+      path: "/wallpaper",
+      name: "wallpaper",
+      component: () => import("../views/Wallpaper.vue"),
     },
   ],
 });

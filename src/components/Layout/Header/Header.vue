@@ -3,6 +3,7 @@
     @mousedown="onMouseDown"
     @mousemove="onMouseMove"
     @mouseup="onMouseUp"
+    class="layout__header"
   >
     <HeaderButtons />
   </header>
@@ -11,7 +12,7 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import { ipcRenderer } from "electron";
-import HeaderButtons from "@src/components/Header/HeaderButtons.vue";
+import HeaderButtons from "@src/components/Layout/Header/HeaderButtons.vue";
 
 const state = reactive({
   x: 0,
@@ -19,13 +20,13 @@ const state = reactive({
   isDown: false,
 });
 
-const onMouseDown = (e: MouseEvent) => {
+let onMouseDown = (e: MouseEvent) => {
   state.x = e.x;
   state.y = e.y;
   state.isDown = true;
 };
 
-const onMouseMove = (e: MouseEvent) => {
+let onMouseMove = (e: MouseEvent) => {
   if (state.isDown) {
     const cx = e.screenX - state.x;
     const cy = e.screenY - state.y;
@@ -33,19 +34,23 @@ const onMouseMove = (e: MouseEvent) => {
   }
 };
 
-const onMouseUp = () => {
+let onMouseUp = () => {
   state.isDown = false;
 };
 </script>
 
 <style scoped lang="scss">
-header {
+.layout__header {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   padding: 0;
   margin: 0;
 
-  height: 30px;
+  height: 36px;
   background: #4b4a58;
+  margin: 0;
+
+  cursor: pointer;
 }
 </style>

@@ -1,23 +1,30 @@
 <template>
-  <Header />
-
-  <section>
-    <RouterView />
-  </section>
+  <Section class="layout__app">
+    <Header />
+    <main class="layout__main">
+      <Aside />
+      <RouterView />
+    </main>
+  </Section>
 </template>
 
 <script setup lang="ts">
-import Header from "@src/components/Header/Header.vue";
+import Header from "@src/components/Layout/Header/Header.vue";
+import Aside from "@src/components/Layout/Aside/Aside.vue";
 </script>
 
 <style scoped lang="scss">
-header {
+.layout__app {
   display: flex;
-  align-items: center;
-  padding: 0;
-  margin: 0;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 
-  height: 30px;
-  background: #4b4a58;
+  .layout__main {
+    display: flex;
+    flex-direction: row;
+
+    flex: 1;
+  }
 }
 </style>
