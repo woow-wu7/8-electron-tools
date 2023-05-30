@@ -1,7 +1,5 @@
 <template>
-  <header>
-    <HeaderButtons />
-  </header>
+  <Header />
 
   <section>
     <RouterView />
@@ -9,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import HeaderButtons from "@src/components/HeaderButtons.vue";
+import Header from "@src/components/Header/Header.vue";
 </script>
 
 <style scoped lang="scss">

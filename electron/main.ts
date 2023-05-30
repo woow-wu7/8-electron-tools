@@ -29,12 +29,12 @@ let win: BrowserWindow | null;
 // - 1. app.on("ready", () => {})
 // - 2. app.whenReady().then(createWindow);
 app.on("ready", () => {
-  createWindow(win);
+  win = createWindow(win);
 });
 
-app.on("browser-window-created", () => {
-  console.log("browser-window-created");
-});
+// app.on("browser-window-created", () => {
+//   console.log("browser-window-created");
+// });
 
 // window-all-closed
 // - 最后一个窗口被关闭时退出应用
@@ -48,8 +48,9 @@ app.on("window-all-closed", () => {
 // Home.vue <--> main.js
 // 接收数据
 ipcMain.on("message_from_ipcRenderer", (e, data) => {
-  console.log("e", e);
-  console.log("data", data);
-  // 发数据
-  e.reply("message_from_ipcMain", "主进程to渲染进程");
+  e.reply("message_from_ipcMain", "主进程to渲染进程"); // 发数据
+});
+
+ipcMain.on("coordinate", (e, data) => {
+  win?.setPosition(data.cx, data.cy);
 });

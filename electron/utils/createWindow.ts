@@ -48,6 +48,8 @@ function createWindow(win: BrowserWindow | null) {
     // - 可以加载 html css 等文件
     win.loadFile(path.join(process.env.DIST, "index.html"));
   }
+
+  return win;
 }
 
 export { createWindow };
