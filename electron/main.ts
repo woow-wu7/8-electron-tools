@@ -56,6 +56,7 @@ ipcMain.on("message_from_ipcRenderer", (e, data) => {
 });
 
 ipcMain.on("coordinate", (e, data) => {
+  console.log("e", e);
   win?.setPosition(data.cx, data.cy);
 });
 ipcMain.on("onSmall", () => {

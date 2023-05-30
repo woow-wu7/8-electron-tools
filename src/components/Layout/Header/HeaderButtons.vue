@@ -1,8 +1,10 @@
 <template>
   <span class="header__buttons">
-    <el-icon class="small" @click="onSmall"><Minus /></el-icon>
-    <el-icon class="full" @click="onFull"><FullScreen /></el-icon>
-    <el-icon class="close" @click="onClose"><Close /></el-icon>
+    <el-space>
+      <el-icon class="small" @click="onSmall"><Minus /></el-icon>
+      <el-icon class="full" @click="onFull"><FullScreen /></el-icon>
+      <el-icon class="close" @click="onClose"><Close /></el-icon>
+    </el-space>
   </span>
 </template>
 
@@ -35,7 +37,7 @@ const onFull = () => {
     font-size: 22px;
     width: 40px;
     &:hover {
-      background: rgb(228, 1, 62);
+      color: rgb(255, 66, 66);
     }
   }
 

@@ -47,7 +47,7 @@ let onMouseUp = () => {
   padding: 0;
   margin: 0;
 
-  height: 36px;
+  height: 34px;
   background: #4b4a58;
   margin: 0;
 

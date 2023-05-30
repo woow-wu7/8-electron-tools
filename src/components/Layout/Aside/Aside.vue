@@ -82,7 +82,7 @@ const goPage = (item: any) => {
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 12px 0;
+    padding: 10px 0;
 
     color: #4b4a58;
 
