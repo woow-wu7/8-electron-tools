@@ -1,6 +1,6 @@
-import { app, BrowserWindow, ipcMain, Tray } from "electron";
+import { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from "electron";
 import path from "node:path";
-import { createWindow } from "./utils/createWindow";
+import { createWindow, createTray } from "./utils";
 
 // The built directory structure
 //
@@ -31,8 +31,17 @@ let win: BrowserWindow | null;
 app.on("ready", () => {
   win = createWindow(win);
 
-  const tray = new Tray("images/logo.png");
-  tray.setToolTip("123");
+  app.on("activate", function () {
+    // On macOS it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (BrowserWindow.getAllWindows().length === 0) {
+      win = createWindow(win);
+    }
+  });
+
+  // if (process.platform == "darwin") app.dock.hide();
+
+  createTray();
 });
 
 // app.on("browser-window-created", () => {
@@ -42,7 +51,6 @@ app.on("ready", () => {
 // window-all-closed
 // - 最后一个窗口被关闭时退出应用
 app.on("window-all-closed", () => {
-  win = null;
   app.quit();
 });
 
