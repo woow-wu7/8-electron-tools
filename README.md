@@ -1,4 +1,6 @@
-# Electron + Vue3 + TypeScript + Vite + Pinia + ElementPlus
+# 8-electron-tools
+
+> Electron + Vue3 + TypeScript + Vite + Pinia + ElementPlus
 
 ### 一些单词
 
