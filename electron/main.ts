@@ -44,13 +44,9 @@ app.on("ready", () => {
   createTray();
 });
 
-// app.on("browser-window-created", () => {
-//   console.log("browser-window-created");
-// });
-
-// window-all-closed
-// - 最后一个窗口被关闭时退出应用
+// window-all-closed 最后一个窗口被关闭时退出应用
 app.on("window-all-closed", () => {
+  win = null;
   app.quit();
 });
 
