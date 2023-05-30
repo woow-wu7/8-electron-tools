@@ -1,4 +1,4 @@
-# Electron + Vue3 + TypeScript + Vite + ElementPlus
+# Electron + Vue3 + TypeScript + Vite + Pinia + ElementPlus
 
 ### 一些单词
 

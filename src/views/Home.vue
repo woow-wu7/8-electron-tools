@@ -1,6 +1,5 @@
 <template>
   <section>
-    <header></header>
     <main>
       <button type="button" @click="count++">count is {{ count }}</button>
       <button @click="send">发消息</button>
@@ -31,7 +30,7 @@ ipcRenderer.on("message_from_ipcMain", (e, data) => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .read-the-docs {
   color: #888;
 }

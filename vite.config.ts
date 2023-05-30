@@ -10,6 +10,12 @@ export default defineConfig({
   server: {
     port: 7777,
   },
+  resolve: {
+    alias: {
+      "@electron": path.resolve(__dirname, "electron"),
+      "@src": path.resolve(__dirname, "src"),
+    },
+  },
   css: {
     preprocessorOptions: {
       scss: {
