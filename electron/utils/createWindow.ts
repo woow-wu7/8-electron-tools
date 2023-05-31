@@ -24,6 +24,7 @@ function createWindow(win: BrowserWindow | null) {
     frame: false, // 有/无边框窗口
     resizable: true,
     show: false, // 窗口是否在创建时显示 [ 存在白屏，我们将 show 设置为false，然后再 read-to-show 中进行 show() ]
+    skipTaskbar: true,
   });
 
   win.once("ready-to-show", () => {

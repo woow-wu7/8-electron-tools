@@ -2,7 +2,12 @@
   <section>
     <main>
       <button type="button" @click="count++">count is {{ count }}</button>
-      <button @click="send">发消息</button>
+      <button @click="send" class="rounded-pill">发消息</button>
+
+      <div
+        class="rounded-circle"
+        style="width: 40px; height: 40px; background: red"
+      ></div>
     </main>
   </section>
 </template>

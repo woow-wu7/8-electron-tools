@@ -1,0 +1,6 @@
+@import "./variables";
+
+// rounded
+@function fn-rounded($size) {
+  @return map-get($map-rounded, $size);
+}

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "node:path";
 import { createWindow, createTray } from "./utils";
 
@@ -21,7 +21,7 @@ process.env.PUBLIC = app.isPackaged
 // - https://www.electronjs.org/zh/docs/latest/api/browser-window
 let win: BrowserWindow | null;
 
-// app.whenReady().then(() => {});
+app.whenReady().then(() => {});
 
 // 2
 // app

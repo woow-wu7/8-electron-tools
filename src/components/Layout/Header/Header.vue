@@ -52,5 +52,7 @@ let onMouseUp = () => {
   margin: 0;
 
   cursor: pointer;
+
+  // -webkit-app-region: drag; // css方式拖动，但是这样的话 header 的按钮 (最大化，最小化，关闭) 就懂不能用了
 }
 </style>

@@ -1,0 +1,8 @@
+@import "./base/function";
+
+.rounded-pill {
+  border-radius: fn-rounded(pill);
+}
+.rounded-circle {
+  border-radius: fn-rounded(circle);
+}

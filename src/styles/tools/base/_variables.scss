@@ -1,0 +1,10 @@
+// rounded
+$border-radius-root: 0.25rem;
+$map-rounded: (
+  0: 0,
+  "sm": calc($border-radius-root / 2),
+  "lg": calc($border-radius-root * 2),
+  "xl": calc($border-radius-root * 6),
+  "pill": 9999px,
+  "circle": 50%,
+);
