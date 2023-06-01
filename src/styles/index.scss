@@ -1,5 +1,5 @@
-@import "./reset.scss";
-@import "./tools/index";
+@use "./reset.scss";
+@use "./tools/index";
 
 .bx {
   color: red;

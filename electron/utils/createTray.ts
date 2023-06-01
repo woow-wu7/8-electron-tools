@@ -1,17 +1,18 @@
-import { Tray, Menu } from "electron";
+import { Tray, Menu, app } from "electron";
+import type { TWin } from "../main";
+
 const path = require("path");
 
-const createTray = () => {
+const createTray = (win: TWin) => {
   const tray = new Tray(
     path.join(__dirname, "../electron/images/cTemplate@2x.png")
   );
   const contextMenu = Menu.buildFromTemplate([
-    { label: "Item1", type: "radio" },
-    { label: "Item2", type: "radio" },
-    { label: "Item3", type: "radio", checked: true },
-    { label: "Item4", type: "radio" },
+    { label: "最大化", click: () => win?.maximize() },
+    { type: "separator" },
+    { label: "退出", click: () => app.quit() },
   ]);
-  tray.setToolTip("This is my application.");
+  tray.setToolTip("8-electron-tools");
   tray.setContextMenu(contextMenu);
 };
 

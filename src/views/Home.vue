@@ -8,6 +8,21 @@
         class="rounded-circle"
         style="width: 40px; height: 40px; background: red"
       ></div>
+
+      <div
+        class="rounded-sm"
+        style="width: 100px; height: 60px; background: red"
+      ></div>
+
+      <div
+        class="rounded-lg"
+        style="width: 100px; height: 60px; background: red"
+      ></div>
+
+      <div
+        class="rounded-xl"
+        style="width: 100px; height: 60px; background: red"
+      ></div>
     </main>
   </section>
 </template>

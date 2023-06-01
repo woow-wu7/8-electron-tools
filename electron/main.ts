@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron";
-import path from "node:path";
 import { createWindow, createTray } from "./utils";
+import path from "node:path";
 
 // The built directory structure
 //
@@ -19,7 +19,8 @@ process.env.PUBLIC = app.isPackaged
 // 1
 // BrowserWindow
 // - https://www.electronjs.org/zh/docs/latest/api/browser-window
-let win: BrowserWindow | null;
+export type TWin = BrowserWindow | null;
+let win: TWin;
 
 app.whenReady().then(() => {});
 
@@ -41,7 +42,7 @@ app.on("ready", () => {
 
   // if (process.platform == "darwin") app.dock.hide();
 
-  createTray();
+  createTray(win);
 });
 
 // window-all-closed 最后一个窗口被关闭时退出应用

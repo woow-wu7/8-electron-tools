@@ -1,0 +1,6 @@
+@use "./variables" as *;
+
+// rounded
+@mixin mixin-rounded($size) {
+  border-radius: map-get($map-rounded, $size);
+}

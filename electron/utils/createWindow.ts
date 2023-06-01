@@ -1,4 +1,5 @@
 import { BrowserWindow } from "electron";
+import type { TWin } from "../main";
 import path from "node:path";
 
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
@@ -7,7 +8,7 @@ const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 // 1
 // BrowserWindow
 // - https://www.electronjs.org/zh/docs/latest/api/browser-window
-function createWindow(win: BrowserWindow | null) {
+function createWindow(win: TWin) {
   win = new BrowserWindow({
     icon: path.join(process.env.PUBLIC, "electron-vite.svg"),
     webPreferences: {
