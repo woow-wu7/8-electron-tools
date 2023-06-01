@@ -41,18 +41,12 @@ let onMouseUp = () => {
 
 <style scoped lang="scss">
 .layout__header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  @include flex-r-end-center;
+  height: 34px;
   padding: 0;
   margin: 0;
-
-  height: 34px;
   background: #4b4a58;
-  margin: 0;
-
   cursor: pointer;
-
   // -webkit-app-region: drag; // css方式拖动，但是这样的话 header 的按钮 (最大化，最小化，关闭) 就懂不能用了
 }
 </style>

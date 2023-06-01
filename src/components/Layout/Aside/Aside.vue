@@ -30,7 +30,7 @@ const state = reactive({
       path: "record",
       icon: "Monitor",
       id: 0,
-      isSelected: false,
+      isSelected: true,
     },
     {
       text: "壁纸",
@@ -59,33 +59,25 @@ const goPage = (item: any) => {
 
 <style scoped lang="scss">
 .layout__aside {
+  @include flex-c-start-center();
   width: 60px;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   border-right: 1px solid rgb(210, 210, 210);
-
+  background: #fff;
   cursor: pointer;
 
   .aside__logo {
     width: 40px;
     height: 40px;
     margin-top: 20px;
-    filter: drop-shadow(2px 2px 2px #c9c9c9);
     margin-bottom: 40px;
+    filter: drop-shadow(2px 2px 2px #c9c9c9);
   }
 
   .aside__menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @include flex-c-start-center();
     width: 100%;
     padding: 10px 0;
-
     color: #4b4a58;
-
     &:hover {
       color: #76c2af;
     }
@@ -93,9 +85,10 @@ const goPage = (item: any) => {
     .aside__icon {
       font-size: 24px;
     }
+
     .aside__text {
-      font-size: 14px;
       margin-top: 2px;
+      font-size: 14px;
     }
   }
 }

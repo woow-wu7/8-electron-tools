@@ -27,15 +27,14 @@ const onFull = () => {
 <style scoped lang="scss">
 .header__buttons {
   height: 100%;
-  display: flex;
-  align-items: center;
+  @include flex-center;
 
   .close {
     height: 100%;
-    box-sizing: border-box;
-    color: #fff;
-    font-size: 22px;
     width: 40px;
+    box-sizing: border-box;
+    font-size: 22px;
+    color: #fff;
     &:hover {
       color: rgb(255, 66, 66);
     }
@@ -43,10 +42,10 @@ const onFull = () => {
 
   .small {
     padding: 2px;
-    box-sizing: border-box;
-    color: #fff;
-    font-size: 22px;
     margin-right: 10px;
+    box-sizing: border-box;
+    font-size: 22px;
+    color: #fff;
     &:hover {
       color: rgb(255, 217, 3);
     }
@@ -55,8 +54,8 @@ const onFull = () => {
   .full {
     padding: 2px;
     box-sizing: border-box;
-    color: #fff;
     font-size: 20px;
+    color: #fff;
     &:hover {
       color: rgb(5, 255, 80);
     }
