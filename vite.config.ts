@@ -9,6 +9,7 @@ const path = require("path");
 export default defineConfig({
   server: {
     port: 7777,
+    host: "localhost",
   },
   resolve: {
     alias: {

@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: "/",
       name: "record",
-      component: () => import("../views/Home.vue"),
+      component: () => import("../views/Recorder.vue"),
     },
     {
       path: "/wallpaper",

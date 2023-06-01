@@ -15,15 +15,12 @@ import Aside from "@src/components/Layout/Aside/Aside.vue";
 
 <style scoped lang="scss">
 .layout__app {
-  display: flex;
-  flex-direction: column;
+  @include flex-column();
   height: 100%;
   width: 100%;
 
   .layout__main {
-    display: flex;
-    flex-direction: row;
-
+    @include flex-row();
     flex: 1;
   }
 }
