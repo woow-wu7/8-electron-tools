@@ -61,8 +61,9 @@ const goPage = (item: any) => {
 .layout__aside {
   @include flex-c-start-center();
   width: 60px;
-  border-right: 1px solid rgb(210, 210, 210);
-  background: #fff;
+  border-right: 1px solid #12121c;
+  box-sizing: border-box;
+  background: #262839;
   cursor: pointer;
 
   .aside__logo {
@@ -70,14 +71,14 @@ const goPage = (item: any) => {
     height: 40px;
     margin-top: 20px;
     margin-bottom: 40px;
-    filter: drop-shadow(2px 2px 2px #c9c9c9);
   }
 
   .aside__menu {
     @include flex-c-start-center();
     width: 100%;
     padding: 10px 0;
-    color: #4b4a58;
+    color: #7077a3;
+
     &:hover {
       color: #76c2af;
     }
@@ -94,7 +95,6 @@ const goPage = (item: any) => {
 }
 
 .is-selected {
-  color: #fff !important;
-  background: #76c2af;
+  color: #3ae9b0 !important;
 }
 </style>

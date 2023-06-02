@@ -18,9 +18,11 @@ import Aside from "@src/components/Layout/Aside/Aside.vue";
   @include flex-column();
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
 
   .layout__main {
     @include flex-row();
+    box-sizing: border-box;
     flex: 1;
   }
 }

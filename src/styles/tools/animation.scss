@@ -1,0 +1,11 @@
+.loading-clockwise {
+  animation: rotate-clockwise 1.2s linear 0s infinite;
+}
+@keyframes rotate-clockwise {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -2,6 +2,8 @@
 
 > Electron + Vue3 + TypeScript + Vite + Pinia + ElementPlus
 
+![home](。/../src/assets/images/home.jpg)
+
 ### 一些单词
 
 ```

@@ -1,10 +1,15 @@
 <template>
   <section ref="recordRef">
-    <div class="start__layer" v-if="state.isShow">
-      <div class="button__start" @click="onStartRecord">录屏</div>
+    <div class="start__layer" v-show="state.isShow">
+      <div class="button__start" @click="onStartRecord">
+        <el-icon class="loading-clockwise font-30" v-if="state.loading"
+          ><Refresh
+        /></el-icon>
+        <div v-else>录屏</div>
+      </div>
     </div>
     <video src="" ref="videoRef" autoplay muted></video>
-    <div class="end__layer" @click="onStopRecord" v-if="!state.isShow">
+    <div class="end__layer" @click="onStopRecord" v-show="!state.isShow">
       <div class="button__end">关闭</div>
     </div>
   </section>
@@ -12,43 +17,31 @@
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-// 注意
-// 这里渲染进程 之所以可以使用node是因为 我们设置了 ( nodeIntegration contextIsolation )
-// const { ipcRenderer } = require("electron");
-
-// 发数据
-// const send = () => {
-//   ipcRenderer.send("message_from_ipcRenderer", "渲染进程to主进程");
-// };
-
-// 接收数据
-// ipcRenderer.on("message_from_ipcMain", (e, data) => {
-//   console.log("e", e);
-//   console.log("data", data);
-// });
 
 const videoRef = ref();
 const recordRef = ref();
 
 const state = reactive({
   isShow: true,
+  loading: false,
 });
 
-const onStartRecord = () => {
+const onStartRecord = async () => {
+  await init();
   state.isShow = false;
-  init();
 };
 
 const init = async () => {
-  console.log("first", recordRef.value.clientWidth);
+  state.loading = true;
   const stream = await navigator.mediaDevices.getUserMedia({
     video: {
       width: recordRef.value.offsetWidth,
-      height: recordRef.value.offsetHeight + 6,
+      height: recordRef.value.offsetHeight - 10,
     },
   });
   videoRef.value.srcObject = stream;
   videoRef.value.play();
+  state.loading = false;
 };
 
 const onStopRecord = () => {
@@ -66,12 +59,26 @@ const onStopRecord = () => {
 //   videoRef.value.srcObject = stream;
 //   videoRef.value.play();
 // };
+
+// 注意
+// 这里渲染进程 之所以可以使用node是因为 我们在 electron main.js 中 设置了 ( nodeIntegration contextIsolation )
+// const { ipcRenderer } = require("electron");
+
+// 发数据
+// const send = () => {
+//   ipcRenderer.send("message_from_ipcRenderer", "渲染进程to主进程");
+// };
+
+// 接收数据
+// ipcRenderer.on("message_from_ipcMain", (e, data) => {
+//   console.log("e", e);
+//   console.log("data", data);
+// });
 </script>
 
 <style scoped lang="scss">
 section {
-  width: 100%;
-  height: 100%;
+  flex: 1;
   position: relative;
 
   .start__layer {
@@ -81,7 +88,7 @@ section {
     left: 0;
     bottom: 0;
     right: 0;
-    background: linear-gradient(to bottom, #27323c, #1f272f);
+    background: #262839;
     z-index: 999;
 
     .button__start {
@@ -90,7 +97,7 @@ section {
       height: 130px;
       background: #1a1f23;
       border-radius: 100%;
-      border: 6px solid #2190c1;
+      border: 6px solid #25b493;
       color: #fff;
       box-shadow: -1px -1px -1px 100px #1a1f23;
       cursor: pointer;
@@ -104,7 +111,7 @@ section {
     left: 0;
     width: 100%;
     height: 30px;
-    background: rgb(24, 24, 24);
+    background: #1f272f;
     cursor: pointer;
     color: #fff;
   }
