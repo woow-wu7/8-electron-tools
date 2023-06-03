@@ -3,11 +3,22 @@
 .loading-clockwise {
   animation: rotate-clockwise 1.2s linear 0s infinite;
 }
+.loading-anticlockwise {
+  animation: rotate-anticlockwise 1.2s linear 0s infinite;
+}
 @keyframes rotate-clockwise {
   from {
     transform: rotate(0);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+@keyframes rotate-anticlockwise {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
   }
 }

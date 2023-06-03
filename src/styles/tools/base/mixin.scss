@@ -4,3 +4,8 @@
 @mixin mixin-rounded($size) {
   border-radius: map-get($map-rounded, $size);
 }
+
+// pointer
+@mixin pointer() {
+  cursor: pointer;
+}

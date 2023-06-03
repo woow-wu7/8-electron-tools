@@ -1,13 +1,13 @@
+import { VIDEO_PATH } from "@src/utils/constant";
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const url = require("url");
 
 const httpServer = () => {
-  const server = http.createServer((req: any, res: any) => {
-    const pathName = path.join("/Users/xiawu/Downloads/video", req.url);
+  const server = http.createServer((req: { url: string }, res: any) => {
+    const pathName = path.join(VIDEO_PATH, req.url);
 
-    fs.readFile(pathName, (err: any, data: any) => {
+    fs.readFile(pathName, (err: Error, data: any) => {
       if (err) {
         res.writeHead(404, {
           "Content-Type": "text/plain;charset=utf-8",

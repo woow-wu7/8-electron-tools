@@ -1,12 +1,10 @@
-import { ipcMain, desktopCapturer } from "electron";
+import { ipcMain, desktopCapturer, screen } from "electron";
 import type { TWin } from "../main";
 
 const createCapture = async (win: TWin) => {
   ipcMain.on("start-get-desktop-source", async (e) => {
-    const sizeInfo = {
-      width: (win?.getSize()?.[0] ?? 0) + 40,
-      height: 200,
-    };
+    const sizeInfo = getSize();
+
     const source = await desktopCapturer.getSources({
       types: ["window", "screen"],
       thumbnailSize: sizeInfo, // 媒体源缩略图应缩放到的尺寸大小
@@ -15,12 +13,12 @@ const createCapture = async (win: TWin) => {
   });
 };
 
-// const getSize = () => {
-//   const { size, scaleFactor } = screen.getPrimaryDisplay();
-//   return {
-//     width: size.width * scaleFactor,
-//     height: size.height * scaleFactor, // 输出设备的像素比例因子
-//   };
-// };
+const getSize = () => {
+  const { scaleFactor } = screen.getPrimaryDisplay();
+  return {
+    width: 144 * scaleFactor,
+    height: 196 * scaleFactor, // 输出设备的像素比例因子
+  };
+};
 
 export { createCapture };

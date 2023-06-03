@@ -41,7 +41,6 @@
     </div>
 
     <div class="record__list">
-      <!-- <div class="record__title">视频播放列表</div> -->
       <div
         v-for="(item, i) in state.recordList"
         :class="['record__item', { 'is-selected': item.isSelected }]"
@@ -49,9 +48,8 @@
       >
         <div class="record__name">{{ item.name }}</div>
         <div class="record__play" @click="onPlay(item)">播放</div>
+        <div class="record__open" @click="onOpen(item)">打开文件夹</div>
         <div class="record__del" @click="onDelete(item)">删除</div>
-        <!-- <div class="record__time">{{ item.time }}</div>
-        <div class="record__size">{{ item.size }}</div> -->
       </div>
     </div>
   </section>
@@ -59,15 +57,15 @@
 
 <script setup lang="ts">
 import { reactive, onMounted, onUnmounted } from "vue";
-const { ipcRenderer } = require("electron");
 import { useTimer } from "../utils/hooks/useTimer";
-import { httpServer } from "../server/server";
+import { httpServer } from "../server";
+import { VIDEO_PATH } from "@src/utils/constant";
 
+const { ipcRenderer } = require("electron");
 const fs = require("fs");
 const path = require("path");
 
 const { time, clearTimer, run: timerRun } = useTimer();
-console.log("time", time);
 
 const state = reactive<any>({
   previewImageUrl: "",
@@ -90,8 +88,7 @@ onUnmounted(() => {
 const getPreviewResource = () => {
   return new Promise((resolve) => {
     ipcRenderer.send("start-get-desktop-source");
-    ipcRenderer.on("end-get-desktop-source", (e, data) => {
-      console.log("e", e);
+    ipcRenderer.on("end-get-desktop-source", (_, data) => {
       resolve(data);
     });
   });
@@ -104,7 +101,6 @@ const initPreviewImg = async () => {
 
 const initRecordList = () => {
   state.recordList = readVideo();
-  console.log("state.recordList", state.recordList);
 };
 
 const getStream = async () => {
@@ -168,13 +164,11 @@ const startRecord = async (stream: any) => {
 };
 
 const readVideo = () => {
-  if (fs.existsSync("/Users/xiawu/Downloads/video")) {
-    const videoNames = fs.readdirSync("/Users/xiawu/Downloads/video");
+  if (fs.existsSync(VIDEO_PATH)) {
+    const videoNames = fs.readdirSync(VIDEO_PATH);
 
-    console.log("videoNames", videoNames);
     const fileNames = videoNames.filter((item: any) => {
-      const filePath = path.join(`/Users/xiawu/Downloads/video/${item}`);
-      console.log("33333", fs.statSync(filePath));
+      const filePath = path.join(`${VIDEO_PATH}/${item}`);
       return fs.statSync(filePath) && item.match(/.mp4$/);
     });
 
@@ -188,20 +182,16 @@ const saveVideo = (blob: any) => {
   return new Promise((resolve, reject) => {
     const times = new Date().getTime();
 
-    if (!fs.existsSync("/Users/xiawu/Downloads/video")) {
-      fs.mkdirSync("/Users/xiawu/Downloads/video", { recursive: true });
+    if (!fs.existsSync(VIDEO_PATH)) {
+      fs.mkdirSync(VIDEO_PATH, { recursive: true });
     }
 
     const reader: any = new FileReader();
     reader.readAsArrayBuffer(blob);
     reader.onload = () => {
-      console.log("111", reader);
       const buffer = Buffer.from(reader?.result);
-      fs.writeFile(
-        `/Users/xiawu/Downloads/video/${times}.mp4`,
-        buffer,
-        {},
-        (err: any) => console.log(err)
+      fs.writeFile(`${VIDEO_PATH}/${times}.mp4`, buffer, {}, (err: any) =>
+        console.log(err)
       );
     };
 
@@ -234,6 +224,10 @@ const onDelete = (item: any) => {
   );
 
   fs.rm(`/Users/xiawu/Downloads/video/${item.name}`);
+};
+
+const onOpen = (item: any) => {
+  ipcRenderer.send("open-dir", item.name);
 };
 
 // const init = async () => {
@@ -286,16 +280,35 @@ section {
           align-items: center;
           cursor: pointer;
 
+          &:hover {
+            .start__icon,
+            .full__icon {
+              font-size: 40px;
+              color: #8998fb;
+            }
+
+            .start__text,
+            .full__text {
+              margin-top: 10px;
+              font-size: 14px;
+              color: #939cd4;
+              user-select: none;
+            }
+          }
+
           .start__icon,
           .full__icon {
             font-size: 40px;
             color: #6c78c7;
+            transition: all 0.41s;
           }
           .start__text,
           .full__text {
             margin-top: 10px;
             font-size: 14px;
             color: #7077a3;
+            user-select: none;
+            transition: all 0.4s;
           }
         }
       }
@@ -336,15 +349,26 @@ section {
       }
 
       .record__play {
+        user-select: none;
         &:hover {
           color: #76c2af;
         }
       }
 
       .record__del {
-        margin-left: 20px;
+        user-select: none;
+
         &:hover {
           color: rgb(255, 72, 105);
+        }
+      }
+
+      .record__open {
+        user-select: none;
+        margin-left: 20px;
+        margin-right: 20px;
+        &:hover {
+          color: #76c2af;
         }
       }
 
@@ -355,6 +379,9 @@ section {
   }
 
   .screen__img {
+    z-index: -111;
+    width: 200;
+    height: 150;
   }
 }
 .is-selected {

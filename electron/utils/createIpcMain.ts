@@ -1,4 +1,4 @@
-import { ipcMain } from "electron";
+import { ipcMain, shell } from "electron";
 
 // 3
 // 进程通信
@@ -11,6 +11,7 @@ const createIpcMain = async (win: any) => {
     e.reply("message_from_ipcMain", "主进程to渲染进程"); // 发数据
   });
 
+  // 拖动 最大化  最小化 关闭
   ipcMain.on("coordinate", (e, data) => {
     console.log("e", e);
     win?.setPosition(data.cx, data.cy);
@@ -25,7 +26,10 @@ const createIpcMain = async (win: any) => {
     win?.close();
   });
 
-
+  // 打开文件夹
+  ipcMain.on("open-dir", (e, path) => {
+    shell.showItemInFolder(`/Users/xiawu/Downloads/video/${path}`);
+  });
 };
 
 export { createIpcMain };

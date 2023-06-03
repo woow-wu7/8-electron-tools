@@ -1,10 +1,10 @@
 <template>
   <section class="layout__aside">
-    <img :src="logo" class="aside__logo" />
+    <img :src="logo" class="aside__logo none" />
 
     <template v-for="item in state.menuData">
       <div
-        :class="['aside__menu', { 'is-selected': item.isSelected }]"
+        :class="['aside__menu', { 'is-selected': item.isSelected }, 'none']"
         @click="goPage(item)"
       >
         <el-icon class="aside__icon">
@@ -27,7 +27,7 @@ const state = reactive({
   menuData: [
     {
       text: "录屏",
-      path: "record2",
+      path: "record",
       icon: "Monitor",
       id: 0,
       isSelected: true,
@@ -65,6 +65,7 @@ const goPage = (item: any) => {
   box-sizing: border-box;
   background: #262839;
   cursor: pointer;
+  z-index: 99999;
 
   .aside__logo {
     width: 40px;
