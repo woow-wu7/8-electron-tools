@@ -1,5 +1,11 @@
-import { app, BrowserWindow, ipcMain } from "electron";
-import { createWindow, createTray } from "./utils";
+import { app, BrowserWindow } from "electron";
+import {
+  createWindow,
+  createTray,
+  createIpcMain,
+  createCapture,
+} from "./utils";
+
 import path from "node:path";
 
 // The built directory structure
@@ -22,7 +28,7 @@ process.env.PUBLIC = app.isPackaged
 export type TWin = BrowserWindow | null;
 let win: TWin;
 
-app.whenReady().then(() => {});
+// app.whenReady().then(() => {});
 
 // 2
 // app
@@ -40,36 +46,15 @@ app.on("ready", () => {
     }
   });
 
+  // window-all-closed 最后一个窗口被关闭时退出应用
+  app.on("window-all-closed", () => {
+    win = null;
+    app.quit();
+  });
+
   // if (process.platform == "darwin") app.dock.hide();
 
   createTray(win);
-});
-
-// window-all-closed 最后一个窗口被关闭时退出应用
-app.on("window-all-closed", () => {
-  win = null;
-  app.quit();
-});
-
-// 3
-// 进程通信
-// Home.vue <--> main.js
-// 接收数据
-ipcMain.on("message_from_ipcRenderer", (e, data) => {
-  console.log("data", data);
-  e.reply("message_from_ipcMain", "主进程to渲染进程"); // 发数据
-});
-
-ipcMain.on("coordinate", (e, data) => {
-  console.log("e", e);
-  win?.setPosition(data.cx, data.cy);
-});
-ipcMain.on("onSmall", () => {
-  win?.minimize();
-});
-ipcMain.on("onFull", () => {
-  win?.isMaximized() ? win?.unmaximize() : win?.maximize();
-});
-ipcMain.on("onClose", () => {
-  win?.close();
+  createIpcMain(win);
+  createCapture(win);
 });

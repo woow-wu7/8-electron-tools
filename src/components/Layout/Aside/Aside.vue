@@ -27,7 +27,7 @@ const state = reactive({
   menuData: [
     {
       text: "录屏",
-      path: "record",
+      path: "record2",
       icon: "Monitor",
       id: 0,
       isSelected: true,
@@ -78,6 +78,7 @@ const goPage = (item: any) => {
     width: 100%;
     padding: 10px 0;
     color: #7077a3;
+    color: #6c78c7;
 
     &:hover {
       color: #76c2af;

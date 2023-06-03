@@ -12,6 +12,10 @@ Electron 电子
 process 进程
 coordinate 坐标
 tray 托盘
+factor 因数 系数
+
+clockwise 顺时针
+anticlockwise 逆时针
 ```
 
 ### (一) app 模块

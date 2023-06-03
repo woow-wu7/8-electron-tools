@@ -4,9 +4,14 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
+      path: "/1111",
       name: "record",
       component: () => import("../views/Recorder.vue"),
+    },
+    {
+      path: "/",
+      name: "record2",
+      component: () => import("../views/Recorder2.vue"),
     },
     {
       path: "/wallpaper",

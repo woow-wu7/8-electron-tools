@@ -15,3 +15,8 @@ $map-rounded-class: (
     border-radius: $value;
   }
 }
+@for $key from 1 through 66 {
+  .rounded-#{$key} {
+    border-radius: #{$key}px;
+  }
+}
