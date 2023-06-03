@@ -1,5 +1,5 @@
 <template>
-  <section ref="recordRef">
+  <section>
     <div class="record__top">
       <div class="record__left">
         <div class="start__container">
@@ -24,93 +24,54 @@
       </div>
 
       <div class="record__content">
-        <img :src="state.previewImageUrl" class="screen__img" />
+        <img
+          :src="state.previewImageUrl"
+          class="screen__img"
+          v-if="!state.recordUrl"
+        />
+        <video :src="state.recordUrl" v-else></video>
       </div>
     </div>
 
     <div class="record__list">
-      <!-- <video :src="state.previewImage" ref="videoRef" autoplay muted></video> -->
+      <!-- <div class="record__title">视频播放列表</div> -->
       <div
-        v-for="item in state.recordList"
+        v-for="(item, i) in state.recordList"
         :class="['record__item', { 'is-selected': item.isSelected }]"
-        @click="onSelect(item)"
+        @click="onSelect(item, i)"
       >
         <div class="record__name">{{ item.name }}</div>
-        <div class="record__time">{{ item.time }}</div>
-        <div class="record__size">{{ item.size }}</div>
+        <div class="record__name" @click="onPlay(item)">播放</div>
+        <!-- <div class="record__time">{{ item.time }}</div>
+        <div class="record__size">{{ item.size }}</div> -->
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted } from "vue";
+import { reactive, onMounted, onUnmounted } from "vue";
 const { ipcRenderer } = require("electron");
 import { useTimer } from "../utils/hooks/useTimer";
-const fs = require("fs");
 
-const recordRef = ref();
+const fs = require("fs");
+const path = require("path");
+
 const { time, clearTimer, run: timerRun } = useTimer();
 console.log("time", time);
 
 const state = reactive<any>({
   previewImageUrl: "",
-  recordRef: {},
   isStaring: false,
-  recordList: [
-    {
-      name: "列表111.map4",
-      time: "23:00",
-      size: "100Mb",
-      key: 1,
-    },
-    {
-      name: "列表111.map4",
-      time: "23:00",
-      size: "100Mb",
-      key: 2,
-    },
-    {
-      name: "列表111.map4",
-      time: "23:00",
-      size: "100Mb",
-      key: 3,
-    },
-    {
-      name: "列表111.map4",
-      time: "23:00",
-      size: "100Mb",
-      key: 4,
-    },
-    {
-      name: "列表111.map4",
-      time: "23:00",
-      size: "100Mb",
-      key: 5,
-    },
-    {
-      name: "列表111.map4",
-      time: "23:00",
-      size: "100Mb",
-      key: 6,
-    },
-    {
-      name: "列表111.map4",
-      time: "23:00",
-      size: "100Mb",
-      key: 7,
-    },
-    {
-      name: "列表111.map4",
-      time: "23:00",
-      size: "100Mb",
-      key: 8,
-    },
-  ],
+
+  recordRef: {},
+  recordList: [],
+  recordUrl: "",
 });
 
 onMounted(() => {
   initPreviewImg();
+  initRecordList();
 });
 onUnmounted(() => {
   clearTimer();
@@ -129,6 +90,11 @@ const getPreviewResource = () => {
 const initPreviewImg = async () => {
   const source: any = await getPreviewResource();
   state.previewImageUrl = source.thumbnail.toDataURL();
+};
+
+const initRecordList = () => {
+  state.recordList = readVideo();
+  console.log("state.recordList", state.recordList);
 };
 
 const getStream = async () => {
@@ -182,11 +148,30 @@ const startRecord = async (stream: any) => {
       });
       saveVideo(blob).then(() => {
         console.log("保存成功 ");
+
+        state.recordList = readVideo();
       });
     };
     state.recordRef.onerror = (err: any) => {
       console.log("err", err);
     };
+  }
+};
+
+const readVideo = () => {
+  if (fs.existsSync("/Users/xiawu/Downloads/video")) {
+    const videoNames = fs.readdirSync("/Users/xiawu/Downloads/video");
+
+    console.log("videoNames", videoNames);
+    const fileNames = videoNames.filter((item: any) => {
+      const filePath = path.join(`/Users/xiawu/Downloads/video/${item}`);
+      console.log("33333", fs.statSync(filePath));
+      return fs.statSync(filePath) && item.match(/.mp4$/);
+    });
+
+    return fileNames.map((item: any) => ({
+      name: item,
+    }));
   }
 };
 
@@ -220,14 +205,18 @@ const saveVideo = (blob: any) => {
   });
 };
 
-const onSelect = (item: any) => {
-  state.recordList.forEach((current: any) => {
-    if (current.key === item.key) {
+const onSelect = (item: any, i: number) => {
+  state.recordList.forEach((current: any, index: any) => {
+    if (index === i) {
       current.isSelected = true;
     } else {
       current.isSelected = false;
     }
   });
+};
+
+const onPlay = (item: any) => {
+  state.recordUrl = item.name;
 };
 
 // const init = async () => {
@@ -306,15 +295,21 @@ section {
   }
 
   .record__list {
-    padding: 14px 0;
+    box-sizing: border-box;
+
+    .record__title {
+      padding: 12px 30px;
+      color: #6c78c7;
+      border-bottom: 1px solid #191919;
+    }
 
     .record__item {
-      padding: 10px;
-      // background: #315359;
+      padding: 12px 30px;
       color: #6c78c7;
       font-size: 14px;
+      cursor: pointer;
 
-      @include flex-r-between-center();
+      @include flex-r-start-center();
 
       .record__name {
         margin-right: 30px;
