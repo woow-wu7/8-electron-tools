@@ -3,13 +3,6 @@
 @use "./base/mixin" as *;
 
 // rounded
-$map-rounded-class: (
-  "rounded-sm": fn-rounded(sm),
-  "rounded-lg": fn-rounded(lg),
-  "rounded-xl": fn-rounded(xl),
-  "rounded-pill": fn-rounded(pill),
-  "rounded-circle": fn-rounded(circle),
-);
 @each $key, $value in $map-rounded-class {
   .#{$key} {
     border-radius: $value;

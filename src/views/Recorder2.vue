@@ -2,7 +2,7 @@
   <section ref="recordRef">
     <div class="start__layer" v-show="state.isShow">
       <div class="button__start" @click="onStartRecord">
-        <el-icon class="loading-clockwise font-30" v-if="state.loading"
+        <el-icon class="clockwise font-30" v-if="state.loading"
           ><Refresh
         /></el-icon>
         <div v-else>录屏</div>

@@ -3,3 +3,18 @@
     font-size: #{$i}px;
   }
 }
+
+@for $i from 1 through 1000 {
+  .width-#{$i} {
+    width: #{$i}px;
+  }
+  .height-#{$i} {
+    height: #{$i}px;
+  }
+}
+
+@each $key in 100, 200, 300, 400, 500, 600, 700, 800, 900 {
+  .weight-#{$key} {
+    font-weight: $key;
+  }
+}

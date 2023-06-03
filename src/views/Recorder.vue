@@ -7,9 +7,7 @@
             <el-icon class="start__icon" v-if="!state.isStaring"
               ><VideoPlay
             /></el-icon>
-            <el-icon class="start__icon loading-clockwise" v-else
-              ><Refresh
-            /></el-icon>
+            <el-icon class="start__icon clockwise" v-else><Refresh /></el-icon>
             <div class="start__text" v-if="!state.isStaring">开始录屏</div>
             <div class="start__text" v-else>{{ time ? time : "00:00:00" }}</div>
           </div>
