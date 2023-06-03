@@ -1,6 +1,6 @@
 @use "./variables" as *;
 
-// rounded
-@function fn-rounded($size) {
-  @return map-get($map-rounded, $size);
+// radius
+@function fn-radius($size) {
+  @return map-get($map-radius, $size);
 }

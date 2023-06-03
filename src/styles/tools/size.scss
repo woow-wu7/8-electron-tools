@@ -1,3 +1,7 @@
+@use "./base/variables" as *;
+@use "./base/function" as *;
+@use "./base/mixin" as *;
+
 @for $i from 1 through 66 {
   .font-#{$i} {
     font-size: #{$i}px;
@@ -16,5 +20,16 @@
 @each $key in 100, 200, 300, 400, 500, 600, 700, 800, 900 {
   .weight-#{$key} {
     font-weight: $key;
+  }
+}
+
+@each $key, $value in $map-radius-class {
+  .#{$key} {
+    border-radius: $value;
+  }
+}
+@for $key from 1 through 66 {
+  .radius-#{$key} {
+    border-radius: #{$key}px;
   }
 }

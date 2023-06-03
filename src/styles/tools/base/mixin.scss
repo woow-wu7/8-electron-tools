@@ -1,11 +1,11 @@
 @use "./variables" as *;
 
-// rounded
-@mixin mixin-rounded($size) {
-  border-radius: map-get($map-rounded, $size);
+// radius
+@mixin mixin-radius($size) {
+  border-radius: map-get($map-radius, $size);
 }
 
-// pointer
+// cursor
 @mixin pointer() {
   cursor: pointer;
 }
