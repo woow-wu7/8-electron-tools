@@ -29,7 +29,14 @@
           class="screen__img"
           v-if="!state.recordUrl"
         />
-        <video :src="state.recordUrl" v-else></video>
+        <video
+          :src="`http://localhost:7778/${state.recordUrl}`"
+          v-else
+          class="screen__img"
+          width="300"
+          height="400"
+          autoplay
+        ></video>
       </div>
     </div>
 
@@ -41,7 +48,8 @@
         @click="onSelect(item, i)"
       >
         <div class="record__name">{{ item.name }}</div>
-        <div class="record__name" @click="onPlay(item)">播放</div>
+        <div class="record__play" @click="onPlay(item)">播放</div>
+        <div class="record__del" @click="onDelete(item)">删除</div>
         <!-- <div class="record__time">{{ item.time }}</div>
         <div class="record__size">{{ item.size }}</div> -->
       </div>
@@ -53,6 +61,7 @@
 import { reactive, onMounted, onUnmounted } from "vue";
 const { ipcRenderer } = require("electron");
 import { useTimer } from "../utils/hooks/useTimer";
+import { httpServer } from "../server/server";
 
 const fs = require("fs");
 const path = require("path");
@@ -72,6 +81,7 @@ const state = reactive<any>({
 onMounted(() => {
   initPreviewImg();
   initRecordList();
+  httpServer();
 });
 onUnmounted(() => {
   clearTimer();
@@ -148,7 +158,6 @@ const startRecord = async (stream: any) => {
       });
       saveVideo(blob).then(() => {
         console.log("保存成功 ");
-
         state.recordList = readVideo();
       });
     };
@@ -218,6 +227,8 @@ const onSelect = (item: any, i: number) => {
 const onPlay = (item: any) => {
   state.recordUrl = item.name;
 };
+
+const onDelete = (item: any) => {};
 
 // const init = async () => {
 //   const stream = await navigator.mediaDevices.getUserMedia({
@@ -296,6 +307,7 @@ section {
 
   .record__list {
     box-sizing: border-box;
+    padding-top: 10px;
 
     .record__title {
       padding: 12px 30px;
@@ -312,7 +324,20 @@ section {
       @include flex-r-start-center();
 
       .record__name {
-        margin-right: 30px;
+        width: 220px;
+      }
+
+      .record__play {
+        &:hover {
+          color: #76c2af;
+        }
+      }
+
+      .record__del {
+        margin-left: 20px;
+        &:hover {
+          color: rgb(255, 72, 105);
+        }
       }
 
       .record__time {
