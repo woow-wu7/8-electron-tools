@@ -39,16 +39,18 @@
     </div>
 
     <div class="record__list">
-      <div
-        v-for="(item, i) in state.recordList"
-        :class="['record__item', { 'is-selected': item.isSelected }]"
-        @click="onSelect(item, i)"
-      >
-        <div class="record__name">{{ item.name }}</div>
-        <div class="record__play" @click="onPlay(item)">播放</div>
-        <div class="record__open" @click="onOpen(item)">打开文件夹</div>
-        <div class="record__del" @click="onDelete(item)">删除</div>
-      </div>
+      <el-scrollbar height="400px">
+        <div
+          v-for="(item, i) in state.recordList"
+          :class="['record__item', { 'is-selected': item.isSelected }]"
+          @click="onSelect(item, i)"
+        >
+          <div class="record__name">{{ item.name }}</div>
+          <div class="record__play" @click="onPlay(item)">播放</div>
+          <div class="record__open" @click="onOpen(item)">打开文件夹</div>
+          <div class="record__del" @click="onDelete(item)">删除</div>
+        </div>
+      </el-scrollbar>
     </div>
   </section>
 </template>
@@ -325,6 +327,12 @@ section {
   .record__list {
     box-sizing: border-box;
     padding-top: 10px;
+    position: absolute;
+    top: 200px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
 
     .record__title {
       padding: 12px 30px;
