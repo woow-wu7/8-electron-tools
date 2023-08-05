@@ -7,7 +7,7 @@ export const useTimer = () => {
     hour: 0,
     count: 0,
     time: "",
-    timer: 0,
+    timer: null,
   });
 
   const run = () => {
@@ -22,8 +22,8 @@ export const useTimer = () => {
       }
 
       state.hour = Math.floor(state.count / 3600);
-      if (state.hour >= 60) {
-        state.hour = state.hour % 60;
+      if (state.hour >= 24) {
+        state.hour = state.hour % 24;
       }
 
       formatTimer();
@@ -32,6 +32,7 @@ export const useTimer = () => {
 
   const clearTimer = () => {
     clearState();
+    console.log('state.timer', state.timer)
     clearInterval(state.timer);
   };
 

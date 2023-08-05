@@ -9,7 +9,7 @@
             /></el-icon>
             <el-icon class="start__icon clockwise" v-else><Refresh /></el-icon>
             <div class="start__text" v-if="!state.isStaring">开始录屏</div>
-            <div class="start__text" v-else>{{ time ? time : "00:00:00" }}</div>
+            <div class="start__text" v-else>{{ time ?? "00:00:00" }}</div>
           </div>
         </div>
 
@@ -38,8 +38,8 @@
       </div>
     </div>
 
-    <div class="record__list">
-      <el-scrollbar height="400px">
+    <div class="record__list" ref="contentRef">
+      <el-scrollbar :height="contentHeight">
         <div
           v-for="(item, i) in state.recordList"
           :class="['record__item', { 'is-selected': item.isSelected }]"
@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, onUnmounted } from "vue";
+import { reactive, onMounted, onUnmounted, ref, computed } from "vue";
 import { useTimer } from "../utils/hooks/useTimer";
 import { httpServer } from "../server";
 import { VIDEO_PATH } from "@src/utils/constant";
@@ -76,6 +76,9 @@ const state = reactive<any>({
   recordUrl: "",
 });
 
+const contentRef = ref();
+const contentHeight = computed(() => contentRef.value?.offsetHeight);
+
 onMounted(() => {
   initPreviewImg();
   initRecordList();
@@ -85,17 +88,17 @@ onUnmounted(() => {
   clearTimer();
 });
 
-const getPreviewResource = () => {
+const getPreviewResource = (): Promise<Electron.DesktopCapturerSource> => {
   return new Promise((resolve) => {
-    ipcRenderer.send("start-get-desktop-source");
-    ipcRenderer.on("end-get-desktop-source", (_, data) => {
+    ipcRenderer.send("CAPTURER:start-get-desktop-source");
+    ipcRenderer.on("CAPTURER:end-get-desktop-source", (_, data) => {
       resolve(data);
     });
   });
 };
 
 const initPreviewImg = async () => {
-  const source: any = await getPreviewResource();
+  const source = await getPreviewResource();
   state.previewImageUrl = source.thumbnail.toDataURL();
 };
 

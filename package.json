@@ -8,6 +8,7 @@
     "start": "npm run dev",
     "dev": "vite",
     "build": "vue-tsc && vite build && electron-builder build --arm64",
+    "build:win": "vue-tsc && vite build && electron-builder build --win",
     "preview": "vite preview"
   },
   "dependencies": {
