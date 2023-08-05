@@ -4,6 +4,7 @@ import {
   createTray,
   createIpcMain,
   createCapture,
+  createFileSavePath,
 } from "./utils";
 
 import path from "node:path";
@@ -46,6 +47,7 @@ app.on("ready", () => {
   createIpcMain(win);
   createCapture(win);
   createTray(win);
+  createFileSavePath(win);
 });
 
 // activate

@@ -48,7 +48,18 @@
           <div class="record__name">{{ item.name }}</div>
           <div class="record__play" @click="onPlay(item)">播放</div>
           <div class="record__open" @click="onOpen(item)">打开文件夹</div>
-          <div class="record__del" @click="onDelete(item)">删除</div>
+
+          <el-popconfirm
+            title="确定要删除吗?"
+            @confirm="onDelete(item)"
+            icon-color="red"
+            confirm-button-type="danger"
+            confirm-button-text="删除"
+          >
+            <template #reference>
+              <div class="record__del">删除</div>
+            </template>
+          </el-popconfirm>
         </div>
       </el-scrollbar>
     </div>
@@ -151,7 +162,7 @@ const startRecord = async (stream: any) => {
       list.push(event.data);
     };
     state.recordRef.onstop = async () => {
-      console.log("stop");
+      console.log("stop video recording");
       const blob = new Blob([...list], {
         type: "video/webm",
       });
@@ -167,7 +178,12 @@ const startRecord = async (stream: any) => {
 };
 
 const readVideo = () => {
-  if (fs.existsSync(VIDEO_PATH)) {
+  // const path = store.get("VIDEO_SAVE_PATH");
+  // console.log("path: ", path);
+
+  const VIDEO_SAVE_PATH = localStorage.getItem("VIDEO_FILE_PATH");
+
+  if (fs.existsSync(VIDEO_SAVE_PATH)) {
     const videoNames = fs.readdirSync(VIDEO_PATH);
 
     const fileNames = videoNames.filter((item: any) => {
@@ -185,25 +201,36 @@ const saveVideo = (blob: any) => {
   return new Promise((resolve, reject) => {
     const times = new Date().getTime();
 
-    if (!fs.existsSync(VIDEO_PATH)) {
-      fs.mkdirSync(VIDEO_PATH, { recursive: true });
-    }
+    getVideoSavePath().then((path) => {
+      const reader: any = new FileReader();
+      reader.readAsArrayBuffer(blob);
+      reader.onload = () => {
+        const buffer = Buffer.from(reader?.result);
+        fs.writeFile(`${path}/${times}.mp4`, buffer, {}, (err: any) =>
+          console.log(err)
+        );
+      };
 
-    const reader: any = new FileReader();
-    reader.readAsArrayBuffer(blob);
-    reader.onload = () => {
-      const buffer = Buffer.from(reader?.result);
-      fs.writeFile(`${VIDEO_PATH}/${times}.mp4`, buffer, {}, (err: any) =>
-        console.log(err)
-      );
-    };
+      reader.onloadend = () => {
+        resolve(true);
+      };
+      reader.onerror = (err: any) => {
+        reject(err);
+      };
+    });
+  });
+};
 
-    reader.onloadend = () => {
-      resolve(true);
-    };
-    reader.onerror = (err: any) => {
-      reject(err);
-    };
+const getVideoSavePath = (): Promise<string> => {
+  return new Promise((resolve) => {
+    ipcRenderer.send("DIALOG:create-file-save-path");
+    ipcRenderer.on("DIALOG:received-file-save-path", (_, path) => {
+      // if (!fs.existsSync(VIDEO_PATH)) {
+      //   fs.mkdirSync(VIDEO_PATH, { recursive: true });
+      // }
+      localStorage.setItem("VIDEO_FILE_PATH", path);
+      resolve(path);
+    });
   });
 };
 
@@ -226,7 +253,11 @@ const onDelete = (item: any) => {
     (record: any) => record.name !== item.name
   );
 
-  fs.rm(`/Users/xiawu/Downloads/video/${item.name}`);
+  const VIDEO_SAVE_PATH = localStorage.getItem("VIDEO_FILE_PATH");
+
+  if (VIDEO_SAVE_PATH) {
+    fs.rm(`${VIDEO_SAVE_PATH}/${item.name}`);
+  }
 };
 
 const onOpen = (item: any) => {
