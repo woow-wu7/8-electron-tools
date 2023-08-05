@@ -184,10 +184,10 @@ const readVideo = () => {
   const VIDEO_SAVE_PATH = localStorage.getItem("VIDEO_FILE_PATH");
 
   if (fs.existsSync(VIDEO_SAVE_PATH)) {
-    const videoNames = fs.readdirSync(VIDEO_PATH);
+    const videoNames = fs.readdirSync(VIDEO_SAVE_PATH);
 
     const fileNames = videoNames.filter((item: any) => {
-      const filePath = path.join(`${VIDEO_PATH}/${item}`);
+      const filePath = path.join(`${VIDEO_SAVE_PATH}/${item}`);
       return fs.statSync(filePath) && item.match(/.mp4$/);
     });
 
