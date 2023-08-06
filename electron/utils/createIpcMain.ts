@@ -1,5 +1,5 @@
 import { ipcMain, shell } from "electron";
-import type { BrowserWindow } from 'electron';
+import type { BrowserWindow } from "electron";
 
 // 3
 // 进程通信
@@ -31,7 +31,7 @@ const createIpcMain = async (win: BrowserWindow) => {
 
   // 打开文件夹
   ipcMain.on("open-dir", (e, path) => {
-    shell.showItemInFolder(`/Users/xiawu/Downloads/video/${path}`);
+    shell.showItemInFolder(path);
   });
 };
 

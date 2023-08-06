@@ -197,32 +197,38 @@ const readVideo = () => {
   }
 };
 
-const saveVideo = (blob: any) => {
-  return new Promise((resolve, reject) => {
+const saveVideo = (blob: Blob) => {
+  return new Promise(async (resolve, reject) => {
     const times = new Date().getTime();
 
-    getVideoSavePath().then((path) => {
-      const reader: any = new FileReader();
-      reader.readAsArrayBuffer(blob);
-      reader.onload = () => {
-        const buffer = Buffer.from(reader?.result);
-        fs.writeFile(`${path}/${times}.mp4`, buffer, {}, (err: any) =>
-          console.log(err)
-        );
-      };
+    const path = await getVideoSavePath();
 
-      reader.onloadend = () => {
-        resolve(true);
-      };
-      reader.onerror = (err: any) => {
-        reject(err);
-      };
-    });
+    const reader: any = new FileReader();
+    reader.readAsArrayBuffer(blob);
+
+    reader.onload = () => {
+      const buffer = Buffer.from(reader?.result);
+      fs.writeFile(`${path}/${times}.mp4`, buffer, {}, (err: Error) =>
+        console.log(err)
+      );
+    };
+
+    reader.onloadend = () => {
+      resolve(true);
+    };
+
+    reader.onerror = (err: Error) => {
+      reject(err);
+    };
   });
 };
 
-const getVideoSavePath = (): Promise<string> => {
+const getVideoSavePath = async (): Promise<string> => {
   return new Promise((resolve) => {
+    if (localStorage.getItem("VIDEO_FILE_PATH")) {
+      return resolve(localStorage.getItem("VIDEO_FILE_PATH") as string);
+    }
+
     ipcRenderer.send("DIALOG:create-file-save-path");
     ipcRenderer.on("DIALOG:received-file-save-path", (_, path) => {
       // if (!fs.existsSync(VIDEO_PATH)) {
@@ -261,7 +267,11 @@ const onDelete = (item: any) => {
 };
 
 const onOpen = (item: any) => {
-  ipcRenderer.send("open-dir", item.name);
+  const path = localStorage.getItem("VIDEO_FILE_PATH");
+
+  if (path) {
+    ipcRenderer.send("open-dir", `${path}/${item.name}`);
+  }
 };
 
 // const init = async () => {

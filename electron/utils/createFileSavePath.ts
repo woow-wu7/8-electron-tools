@@ -2,7 +2,7 @@ import { ipcMain, dialog } from "electron";
 import type { TWin } from "../main";
 
 export const createFileSavePath = (win: TWin) => {
-  ipcMain.on("DIALOG:create-file-save-path", (e, data) => {
+  ipcMain.on("DIALOG:create-file-save-path", (e) => {
     dialog
       .showOpenDialog({
         title: "请选择视频保存目录",
