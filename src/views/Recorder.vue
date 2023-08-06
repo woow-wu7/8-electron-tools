@@ -179,9 +179,6 @@ const startRecord = async (stream: any) => {
 };
 
 const readVideo = () => {
-  // const path = store.get("VIDEO_SAVE_PATH");
-  // console.log("path: ", path);
-
   const VIDEO_SAVE_PATH = localStorage.getItem("VIDEO_FILE_PATH");
 
   if (fs.existsSync(VIDEO_SAVE_PATH)) {

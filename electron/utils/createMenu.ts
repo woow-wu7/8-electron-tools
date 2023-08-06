@@ -1,4 +1,4 @@
-import { Menu } from "electron";
+import { Menu, MenuItem } from "electron";
 import type { TWin } from "../main";
 
 export const createMenu = (win: TWin) => {
@@ -33,6 +33,10 @@ export const createMenu = (win: TWin) => {
   ];
 
   // const nativeMenu = Menu.getApplicationMenu();
-  var list = Menu.buildFromTemplate(menuTemplate);
-  Menu.setApplicationMenu(list);
+  const list = Menu.buildFromTemplate(menuTemplate);
+
+  const menuItem = new MenuItem({ label: "添加的子菜单1" });
+  list.items.at(-1)?.submenu?.append(menuItem);
+
+  // Menu.setApplicationMenu(list);
 };
