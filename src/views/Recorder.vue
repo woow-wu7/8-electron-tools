@@ -69,7 +69,7 @@
 <script setup lang="ts">
 import { reactive, onMounted, onUnmounted, ref, computed } from "vue";
 import { useTimer } from "../utils/hooks/useTimer";
-import { httpServer } from "../server";
+import { server, httpServer } from "../server";
 import { VIDEO_PATH } from "@src/utils/constant";
 
 const { ipcRenderer } = require("electron");
@@ -97,6 +97,7 @@ onMounted(() => {
 });
 onUnmounted(() => {
   clearTimer();
+  server.close();
 });
 
 const getPreviewResource = (): Promise<Electron.DesktopCapturerSource> => {

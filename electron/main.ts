@@ -28,7 +28,7 @@ process.env.PUBLIC = app.isPackaged
 // BrowserWindow
 // - https://www.electronjs.org/zh/docs/latest/api/browser-window
 export type TWin = BrowserWindow | null;
-let win: TWin;
+let mainWindow: TWin;
 
 // app.whenReady().then(() => {});
 
@@ -41,15 +41,15 @@ let win: TWin;
 // ready
 // - Electron 完成初始化时触发一次
 app.on("ready", () => {
-  win = createWindow(win);
+  mainWindow = createWindow(mainWindow);
 
   // if (process.platform == "darwin") app.dock.hide();
 
-  createIpcMain(win);
-  createCapture(win);
-  createTray(win);
-  createFileSavePath(win);
-  createNotification(win);
+  createIpcMain(mainWindow);
+  createCapture(mainWindow);
+  createTray(mainWindow);
+  createFileSavePath(mainWindow);
+  createNotification(mainWindow);
 });
 
 // activate
@@ -58,13 +58,13 @@ app.on("activate", function () {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
-    win = createWindow(win);
+    mainWindow = createWindow(mainWindow);
   }
 });
 
 // window-all-closed
 // - 最后一个窗口被关闭时触发
 app.on("window-all-closed", () => {
-  win = null;
+  mainWindow = null;
   app.quit(); // 退出应用
 });

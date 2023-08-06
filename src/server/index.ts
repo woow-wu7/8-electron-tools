@@ -3,8 +3,10 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
+let server: any;
+
 const httpServer = () => {
-  const server = http.createServer((req: { url: string }, res: any) => {
+  server = http.createServer((req: { url: string }, res: any) => {
     const pathName = path.join(VIDEO_PATH, req.url);
 
     fs.readFile(pathName, (err: Error, data: any) => {
@@ -27,4 +29,4 @@ const httpServer = () => {
   server.listen(7778, () => "server is running");
 };
 
-export { httpServer };
+export { server, httpServer };
