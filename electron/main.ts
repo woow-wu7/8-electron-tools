@@ -2,6 +2,7 @@ import { app, BrowserWindow } from "electron";
 import {
   createWindow,
   createTray,
+  createMenu,
   createIpcMain,
   createCapture,
   createFileSavePath,
@@ -48,6 +49,7 @@ app.on("ready", () => {
   createIpcMain(mainWindow);
   createCapture(mainWindow);
   createTray(mainWindow);
+  createMenu(mainWindow);
   createFileSavePath(mainWindow);
   createNotification(mainWindow);
 });

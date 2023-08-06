@@ -26,6 +26,8 @@ function createWindow(win: TWin) {
     resizable: true,
     show: false, // 窗口是否在创建时显示 [ 存在白屏，我们将 show 设置为false，然后再 read-to-show 中进行 show() ]
     skipTaskbar: true,
+    movable: false, // 允许拖动
+    // backgroundColor: "red",
   });
 
   win.once("ready-to-show", () => {
